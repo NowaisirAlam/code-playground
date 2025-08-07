@@ -2,7 +2,7 @@ import speech_recognition as sr
 import webbrowser,os
 import pyttsx3 #converts text into speech
 # import webdriver
-import datetime
+import datetime,openai
 
 engine = pyttsx3.init() # calls init class and creates a new engine instance
 
