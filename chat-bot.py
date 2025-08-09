@@ -24,7 +24,7 @@ def takeCommand():
             return 'some error occured'
 
 
-site = [['google', 'https://www.google.com'],['netflix', 'https://www.netflix.com'],['youtube','https://www.youtube.com']]
+site = [['google', 'https://www.google.com'],['netflix', 'https://www.netflix.com'],['youtube','https://www.youtube.com'],['facebook','https://www.facebook.com'],['linkedin','https://www.linkedin.com']]
 if __name__ == '__main__':
     while True:
         text = takeCommand()
