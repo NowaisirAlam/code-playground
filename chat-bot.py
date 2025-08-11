@@ -54,4 +54,5 @@ if __name__ == '__main__':
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
+pass
         
