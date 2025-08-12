@@ -3,6 +3,7 @@ import webbrowser,os
 import pyttsx3 #converts text into speech
 # import webdriver
 import datetime,openai
+from openai import OpenAI
 a =23
 
 engine = pyttsx3.init() # calls init class and creates a new engine instance
@@ -55,4 +56,4 @@ if __name__ == '__main__':
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
 pass
-        
+    
