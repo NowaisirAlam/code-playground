@@ -15,7 +15,7 @@ def takeCommand():
     r = sr.Recognizer() 
     with sr.Microphone() as source: #takes source as a file input
         r.pause_threshold = 1 # if 1s of silence then stop listening
-        print('Listening...')
+        print('Listening...') #differentiating when it is actually listening
         try:
             audio = r.listen(source)
             print("Recognizing...")
