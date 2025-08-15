@@ -57,3 +57,4 @@ if __name__ == '__main__':
             speak(f'The time is: {curr_time}')
 pass
 pass
+pass
