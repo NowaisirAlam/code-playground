@@ -4,7 +4,17 @@ import pyttsx3 #converts text into speech
 # import webdriver
 import datetime,openai
 from openai import OpenAI
-a =23
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+def ask_chatgpt(prompt):
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return "Sorry, I couldn't connect to ChatGPT."
 
 engine = pyttsx3.init() # calls init class and creates a new engine instance
 
@@ -55,6 +65,6 @@ if __name__ == '__main__':
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
-pass
-pass
-pass
+        if 'chatgpt' in text.lower():
+            response=ask_chatgpt(text)
+            speak(response)
