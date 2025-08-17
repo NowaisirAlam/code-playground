@@ -54,13 +54,13 @@ if __name__ == '__main__':
                 webbrowser.open(url)
         if 'open music' in text.lower(): #opening spotify via browser
             webbrowser.open('https://open.spotify.com/track/2IPxsVjAkqoFXrzwGwUVia')
+        if os.path.exists(path):
+            os.startfile(path)
+        else:
+            speak("Movie file not found.")
         if 'movie' in text.lower(): #searching files in pc
             path = "C:\\Users\\alamn\\Downloads\\(PlayHD.ooo) Money Heist Season 1 Complete English HD 720p\\(PlayHD.ooo) Money Heist S01E08 English HD 720p x264 AAC.mp4"
             os.startfile(path)
-            # if os.path.exists(path):
-            #     os.startfile(path)
-            # else:
-            #     speak("Movie file not found.")
 
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
