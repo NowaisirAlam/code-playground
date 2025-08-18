@@ -68,3 +68,6 @@ if __name__ == '__main__':
         if 'chatgpt' in text.lower():
             response=ask_chatgpt(text)
             speak(response)
+
+
+#Add more functions
