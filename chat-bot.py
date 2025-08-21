@@ -4,7 +4,7 @@ import pyttsx3 #converts text into speech
 # import webdriver
 import datetime,openai
 from openai import OpenAI
-# client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 # def ask_chatgpt(prompt):
 #     try:
