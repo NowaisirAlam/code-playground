@@ -44,10 +44,10 @@ if __name__ == '__main__':
         # time.sleep(1)
         if 'stop' in text.lower():
             break
-        # for i in site: 
-        #     if f'open {i[0]}' in text.lower():
-        #         speak(f'Opening the {i[0]}')
-        #         webbrowser.open(i[1])
+        for i in site: 
+            if f'open {i[0]}' in text.lower():
+                speak(f'Opening the {i[0]}')
+                webbrowser.open(i[1])
         for name, url in site:
             if f'open {name}' in text.lower():
                 speak(f'Opening {name}')
