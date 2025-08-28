@@ -66,9 +66,11 @@ if __name__ == '__main__':
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
-        # if 'chatgpt' in text.lower():
+        if 'chatgpt' in text.lower():
+            pass
         #     response=ask_chatgpt(text)
         #     speak(response)
 
 
 #Add more functions
+
