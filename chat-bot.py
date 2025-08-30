@@ -68,6 +68,7 @@ if __name__ == '__main__':
             speak(f'The time is: {curr_time}')
         if 'chatgpt' in text.lower():
             pass
+            pass
         #     response=ask_chatgpt(text)
         #     speak(response)
 
