@@ -1,21 +1,21 @@
 import speech_recognition as sr 
 import webbrowser,os
 import pyttsx3 #converts text into speech
-# import webdriver
+from selenium import webdriver
 import datetime
 from openai import OpenAI
 import time
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+# client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-def ask_chatgpt(prompt):
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return "Sorry, I couldn't connect to ChatGPT."
+# def ask_chatgpt(prompt):
+#     try:
+#         response = client.chat.completions.create(
+#             model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
+#             messages=[{"role": "user", "content": prompt}]
+#         )
+#         return response.choices[0].message.content
+#     except Exception as e:
+#         return "Sorry, I couldn't connect to ChatGPT."
 
 engine = pyttsx3.init() # calls init class and creates a new engine instance
 
@@ -25,7 +25,7 @@ def speak(text):
 def takeCommand():
     r = sr.Recognizer() 
     with sr.Microphone() as source: #takes source as a file input
-        r.pause_threshold = 1 # if 1s of silence then stop listening
+        r.pause_threshold = 1 # time to listen before recognizing, default is at 0.8
         print('Listening...') #differentiating when it is actually listening
         try:
             audio = r.listen(source)
@@ -55,23 +55,17 @@ if __name__ == '__main__':
                 webbrowser.open(url)
         if 'open music' in text.lower(): #opening spotify via browser
             webbrowser.open('https://open.spotify.com/track/2IPxsVjAkqoFXrzwGwUVia')
-        if os.path.exists(path):
-            os.startfile(path)
-        else:
-            speak("Movie file not found.")
         if 'movie' in text.lower(): #searching files in pc
-            path = "C:\\Users\\alamn\\Downloads\\(PlayHD.ooo) Money Heist Season 1 Complete English HD 720p\\(PlayHD.ooo) Money Heist S01E08 English HD 720p x264 AAC.mp4"
-            os.startfile(path)
+            path = r"C:\Users\alamn\Downloads\www.Torrenting.com - Money.Heist.S01E13.XviD-AFG\Money.Heist.S01E13.XviD-AFG.avi"
+
+            if os.path.exists(path):
+                os.startfile(path)
+            else:
+                speak("Movie file not found.")
 
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
-        if 'chatgpt' in text.lower():
-            pass
-            pass
-        #     response=ask_chatgpt(text)
-        #     speak(response)
-
-
-#Add more functions
+        if 'search' and 'google' in  text:
+            webdriver.Chrome()
 
