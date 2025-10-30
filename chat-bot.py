@@ -5,6 +5,8 @@ from selenium import webdriver
 import datetime
 from openai import OpenAI
 import time
+from urllib.parse import quote_plus # it actually attaches find me as https....find+me which makes the search possible
+
 # client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 # def ask_chatgpt(prompt):
@@ -66,6 +68,19 @@ if __name__ == '__main__':
         if 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
-        if 'search' and 'google' in  text:
-            webdriver.Chrome()
+        if 'duck' in text.lower():
+            driver = webdriver.Chrome()
+            driver.get(f"https://duckduckgo.com/")
+            box = driver.find_element("name","q")
+            box.send_keys("OpenAI\n")
+            time.sleep(2)
+            items=driver.find_elements("tag name", "h3")
+            items[0].click()
+            # results = driver.find_elements(By.CSS_SELECTOR, 'a h3')
+            # print(results)
+            # if results:
+            #     results[0].click()
+            # else:
+            #     print("No search results found.")
+
 
