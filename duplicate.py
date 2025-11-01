@@ -17,11 +17,9 @@ SYSTEM_PROMPT = (
 )
 chat_history = [{"role": "system", "content": SYSTEM_PROMPT}]
 MAX_TURNS = 6 
-
 _apikey = None
 
 old_conv = ''
-
 def memory(text):
     global old_conv
     print(old_conv)
@@ -41,14 +39,11 @@ def memory(text):
 
 
 def _apicall():
-
     global _apikey #This helps modify _openai_client
-
     if _apikey is None:
         api_key=os.getenv("OPENAI_API_KEY")
-
         if not api_key:
-            raise RuntimeError('API key not found') #Note: raise is used here
+            raise RuntimeError('API key not found') #Note raise is used here
 
         _apikey = OpenAI(api_key=api_key)
     return _apikey
@@ -56,23 +51,13 @@ def _apicall():
 def ask_chatgpt(prompt):
     try:
         client = _apicall()
-
-        chat_history.append({"role": "user", "content": prompt})
-
-        keep_from = max(1, len(chat_history) - 2 * MAX_TURNS)
-        trimmed = [chat_history[0]] + chat_history[keep_from:]
-
         response = client.chat.completions.create(
             model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
             messages=[{"role": "user", "content": prompt}],
             max_tokens=80,
             temperature=0.6,
         )
-        reply = response.choices[0].message.content
-        
-        chat_history.append({"role": "assistant", "content": reply})
-        return reply
-
+        return response.choices[0].message.content
     except Exception as e:
         return f"Sorry, I couldn't connect to ChatGPT due to {e}"
 
@@ -97,11 +82,6 @@ def takeCommand():
 
 
 site = [['google', 'https://www.google.com'],['netflix', 'https://www.netflix.com'],['youtube','https://www.youtube.com'],['facebook','https://www.facebook.com'],['linkedin','https://www.linkedin.com'],['weather','https://www.theweathernetwork.com/en/city/ca/ontario/london/current'],['chatgpt','https://chatgpt.com/'],['instagram','https://instagram.com']]
-
-def open_duck_search(raw_text):
-    q = raw_text.lower()
-    
-
 if __name__ == '__main__':
     while True:
         text = takeCommand()
