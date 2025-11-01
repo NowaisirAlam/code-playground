@@ -2,6 +2,7 @@ import speech_recognition as sr
 import webbrowser,os
 import pyttsx3 #converts text into speech
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import datetime
 from openai import OpenAI
 import time
@@ -22,21 +23,21 @@ _apikey = None
 
 old_conv = ''
 
-def memory(text):
-    global old_conv
-    print(old_conv)
-    old_conv+= f'You: {text} \n AI: '
-    client =_apicall()
-    response = client.chat.completions.create(
-            model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
-            messages=[{"role": "user", "content": old_conv}],
-            max_tokens=80,
-            temperature=0.6,
-        )
-    speak(response.choices[0].message.content)
-    old_conv += response.choices[0].message.content
+# def memory(text):
+#     global old_conv
+#     print(old_conv)
+#     old_conv+= f'You: {text} \n AI: '
+#     client =_apicall()
+#     response = client.chat.completions.create(
+#             model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
+#             messages=[{"role": "user", "content": old_conv}],
+#             max_tokens=80,
+#             temperature=0.6,
+#         )
+#     speak(response.choices[0].message.content)
+#     old_conv += response.choices[0].message.content
 
-    return response.choices[0].message.content
+#     return response.choices[0].message.content
 
 
 
@@ -81,6 +82,7 @@ engine = pyttsx3.init() # calls init class and creates a new engine instance
 def speak(text):
     engine.say(text) #adds text to the queue
     engine.runAndWait() #actually runs the queue until fininshes
+
 def takeCommand():
     r = sr.Recognizer() 
     with sr.Microphone() as source: #takes source as a file input
@@ -96,11 +98,34 @@ def takeCommand():
             return 'some error occured'
 
 
-site = [['google', 'https://www.google.com'],['netflix', 'https://www.netflix.com'],['youtube','https://www.youtube.com'],['facebook','https://www.facebook.com'],['linkedin','https://www.linkedin.com'],['weather','https://www.theweathernetwork.com/en/city/ca/ontario/london/current'],['chatgpt','https://chatgpt.com/'],['instagram','https://instagram.com']]
+site = [['google', 'https://www.google.com'],
+        ['netflix', 'https://www.netflix.com'],
+        ['youtube','https://www.youtube.com'],
+        ['facebook','https://www.facebook.com'],
+        ['linkedin','https://www.linkedin.com'],
+        ['weather','https://www.theweathernetwork.com/en/city/ca/ontario/london/current'],
+        ['chatgpt','https://chatgpt.com/'],
+        ['instagram','https://instagram.com']]
 
 def open_duck_search(raw_text):
     q = raw_text.lower()
-    
+    for word in ["duck", "search", "for"]:
+        query = query.replace(word, "").strip()
+
+    if not query:
+        query = "OpenAI"  # default search
+
+    # Open browser
+    driver = webdriver.Chrome()
+    try:
+        driver.get(f"https://duckduckgo.com/?q={quote_plus(query)}")
+        time.sleep(2)  # give results time to load
+
+        first_result = driver.find_element(By.TAG_NAME, "h3")
+        first_result.click()
+    finally:
+        driver.quit()
+
 
 if __name__ == '__main__':
     while True:
@@ -130,16 +155,17 @@ if __name__ == '__main__':
         elif 'time' in text:
             curr_time = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f'The time is: {curr_time}')
+            continue 
+
         elif 'duck' in text.lower():
-            driver = webdriver.Chrome()
-            driver.get(f"https://duckduckgo.com/")
-            box = driver.find_element("name","q")
-            box.send_keys("OpenAI\n")
-            time.sleep(2)
-            items=driver.find_elements("tag name", "h3")
-            items[0].click()
+            try:
+                open_duck_search(text)
+            except Exception as e:
+                speak(f'Failed: {e}')
+            continue
+
         else:
-            gpt = memory(text.lower())
+            gpt = ask_chatgpt(text.lower())
             print(f'human {text.lower()} \n gpt: {gpt}')
             speak(gpt)
 
