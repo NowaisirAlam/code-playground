@@ -7,17 +7,27 @@ from openai import OpenAI
 import time
 from urllib.parse import quote_plus # it actually attaches find me as https....find+me which makes the search possible
 
-# client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+from dotenv import load_dotenv #COMMAND TO OPEN THE env
+import os
+load_dotenv()
+print(os.getenv("KEY"))
 
-# def ask_chatgpt(prompt):
-#     try:
-#         response = client.chat.completions.create(
-#             model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
-#             messages=[{"role": "user", "content": prompt}]
-#         )
-#         return response.choices[0].message.content
-#     except Exception as e:
-#         return "Sorry, I couldn't connect to ChatGPT."
+def setting_gpt():
+
+    api_key=os.getenv["OPENAI_API_KEY"]
+    client = OpenAI(api_key)
+
+def ask_chatgpt(prompt):
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4.1-mini",   # you can also use gpt-4.1, gpt-4o, gpt-5
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=250,
+            temperature=0.7,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Sorry, I couldn't connect to ChatGPT due to {e}"
 
 engine = pyttsx3.init() # calls init class and creates a new engine instance
 
@@ -58,7 +68,7 @@ if __name__ == '__main__':
         if 'open music' in text.lower(): #opening spotify via browser
             webbrowser.open('https://open.spotify.com/track/2IPxsVjAkqoFXrzwGwUVia')
         if 'movie' in text.lower(): #searching files in pc
-            path = r"C:\Users\alamn\Downloads\www.Torrenting.com - Money.Heist.S01E13.XviD-AFG\Money.Heist.S01E13.XviD-AFG.avi"
+            path = r"C:\\Users\\alamn\\Downloads\\www.Torrenting.com - Money.Heist.S01E13.XviD-AFG\Money.Heist.S01E13.XviD-AFG.avi"
 
             if os.path.exists(path):
                 os.startfile(path)
@@ -76,11 +86,5 @@ if __name__ == '__main__':
             time.sleep(2)
             items=driver.find_elements("tag name", "h3")
             items[0].click()
-            # results = driver.find_elements(By.CSS_SELECTOR, 'a h3')
-            # print(results)
-            # if results:
-            #     results[0].click()
-            # else:
-            #     print("No search results found.")
-
+        if 
 
