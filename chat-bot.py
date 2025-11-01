@@ -110,26 +110,26 @@ site = [['google', 'https://www.google.com'],
 def open_duck_search(raw_text):
     q = raw_text.lower()
     for word in ["duck", "search", "for"]:
-        query = query.replace(word, "").strip()
+        q = q.replace(word, "").strip()
 
-    if not query:
-        query = "OpenAI"  # default search
+    query = q.strip() or "OpenAI"  
 
     # Open browser
     driver = webdriver.Chrome()
-    try:
-        driver.get(f"https://duckduckgo.com/?q={quote_plus(query)}")
-        time.sleep(2)  # give results time to load
+    
+    driver.get(f"https://duckduckgo.com/?q={quote_plus(query)}")
+    time.sleep(2)  # give results time to load
 
-        first_result = driver.find_element(By.TAG_NAME, "h3")
-        first_result.click()
-    finally:
-        driver.quit()
+    first_result = driver.find_element(By.TAG_NAME, "h3")
+    first_result.click()
+    
 
 
 if __name__ == '__main__':
     while True:
         text = takeCommand()
+        # if not text or text == 'some error occured':
+        #     continue
 
         time.sleep(1)
         for i in site: 
@@ -157,7 +157,7 @@ if __name__ == '__main__':
             speak(f'The time is: {curr_time}')
             continue 
 
-        elif 'duck' in text.lower():
+        elif 'internet' in text.lower():
             try:
                 open_duck_search(text)
             except Exception as e:
@@ -168,4 +168,6 @@ if __name__ == '__main__':
             gpt = ask_chatgpt(text.lower())
             print(f'human {text.lower()} \n gpt: {gpt}')
             speak(gpt)
+
+
 
