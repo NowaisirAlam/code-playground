@@ -122,8 +122,7 @@ def open_duck_search(raw_text):
 
     first_result = driver.find_element(By.TAG_NAME, "h3")
     first_result.click()
-    
-
+     
 
 if __name__ == '__main__':
     while True:

@@ -99,14 +99,14 @@ def open_duck_search(raw_text: str):
     first_result = driver.find_element(By.TAG_NAME, "h3")
     first_result.click()
 
-# -------------------- Tiny command router (no infinite loop) --------------------
-def process_text(text: str) -> str:
+# Tiny command router (no infinite loop) 
+def process_text(text):
     """
     Takes raw text, handles simple commands (open sites, time, music, internet),
     otherwise sends to ChatGPT. Returns reply for UI + TTS.
     """
     if not text:
-        return "I didn't catch that."
+        return "Didn't catch that"
 
     low = text.lower()
 

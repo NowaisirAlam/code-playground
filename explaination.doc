@@ -1,0 +1,1 @@
+driver.get(f"https://duckduckgo.com/?q={quote_plus(query)}")
