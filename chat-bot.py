@@ -168,6 +168,3 @@ if __name__ == '__main__':
             gpt = ask_chatgpt(text.lower())
             print(f'human {text.lower()} \n gpt: {gpt}')
             speak(gpt)
-
-
-
