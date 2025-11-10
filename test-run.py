@@ -1,10 +1,7 @@
-# assistant_gui.py
-# Day-1 GUI for your voice assistant (Tkinter)
-# Requires: OPENAI_API_KEY in .env, microphone working, Chrome + driver if you use internet search
-
 import os, time, datetime, threading
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter.scrolledtext import ScrolledText
 
 import speech_recognition as sr
 import webbrowser
@@ -68,9 +65,9 @@ def takeCommand() -> str:
     with sr.Microphone() as source:
         r.pause_threshold = 1
         try:
-            append_chat("system", "🎙️ Listening…")
+            append_chat("system", "🎙️Listening…")
             audio = r.listen(source)
-            append_chat("system", "🧠 Recognizing…")
+            append_chat("system", "🧠Recognizing…")
             return r.recognize_google(audio, language="en-US")
         except Exception:
             return "some error occured"
@@ -99,7 +96,6 @@ def open_duck_search(raw_text: str):
     first_result = driver.find_element(By.TAG_NAME, "h3")
     first_result.click()
 
-# Tiny command router (no infinite loop) 
 def process_text(text):
     """
     Takes raw text, handles simple commands (open sites, time, music, internet),
@@ -148,7 +144,6 @@ def process_text(text):
     # default: ask ChatGPT
     return ask_chatgpt(low)
 
-# -------------------- Tkinter GUI --------------------
 def append_chat(role, text):
     chat_box.configure(state="normal")
     if role == "user":
@@ -157,16 +152,18 @@ def append_chat(role, text):
         chat_box.insert(tk.END, f"Config: {text}\n")
     else:
         chat_box.insert(tk.END, f"{text}\n")
-    chat_box.see(tk.END)
-    chat_box.configure(state="disabled")
+    chat_box.see(tk.END) #always scroll to the very bottom
+    chat_box.configure(state="disabled") # locking the ability to edit in text
 
 def on_send():
-    text = entry.get().strip()
+    text = entry.get().strip() #takes text from the entry widget and strips to string
     if not text:
         return
-    entry.delete(0, tk.END)
-    append_chat("user", text)
+    entry.delete(0, tk.END) #empty the entry widget fully
+    append_chat("user", text) #appends to chat
     threading.Thread(target=_handle_query, args=(text,), daemon=True).start()
+    # root.after(0, lambda: _handle_query(text))
+
 
 def on_mic():
     threading.Thread(target=_mic_flow, daemon=True).start()
@@ -174,7 +171,7 @@ def on_mic():
 def _mic_flow():
     spoken = takeCommand()
     if spoken == "some error occured":
-        append_chat("system", "⚠️ Mic error. Try again.")
+        append_chat("system", "Mic error. Try again.")
         return
     append_chat("user", spoken)
     _handle_query(spoken)
