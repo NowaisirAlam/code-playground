@@ -1,3 +1,0 @@
-driver.get(f"https://duckduckgo.com/?q={quote_plus(query)}")
-quote_plus converts the parameter text to web searchable text
-
