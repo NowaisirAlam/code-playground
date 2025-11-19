@@ -215,4 +215,3 @@ mic_btn.pack(side=tk.LEFT)
 
 append_chat("system", "👋 Config Assistant is ready. Type or click 🎙️ to speak.")
 root.mainloop()
-
