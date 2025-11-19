@@ -1,11 +1,11 @@
-# 🎙️ Config Assistant — Python Voice Assistant
+# Config Assistant — Python Voice Assistant
 
 Config Assistant is a lightweight AI-powered voice assistant built in Python.  
 It supports **voice + text input**, **ChatGPT replies**, **website automation**, **web search**, and includes a clean Tkinter-based chat UI.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **ChatGPT Integration** (GPT-4.1-mini with trimmed chat history)  
 - **Speech Recognition** (`speech_recognition`)  
@@ -18,7 +18,7 @@ It supports **voice + text input**, **ChatGPT replies**, **website automation**,
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Python 3.10+
 - Tkinter (GUI)
@@ -32,7 +32,7 @@ It supports **voice + text input**, **ChatGPT replies**, **website automation**,
 
 ---
 
-## 📦 Installation
+## Installation
 
 Clone the repository:
 ```bash
